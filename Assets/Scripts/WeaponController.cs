@@ -73,8 +73,10 @@ public class WeaponController : MonoBehaviour {
 
             currAmmo -= 1;
 
+            // moved slightly forward so to avoid colliding with the player
+            Vector3 origin = Camera.main.transform.position + Camera.main.transform.forward.normalized / 2f;
             RaycastHit hit;
-            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, range)) {
+            if (Physics.Raycast(origin, Camera.main.transform.forward, out hit, range)) {
                 EnemyController enemy = hit.transform.GetComponent<EnemyController>();
                 if (enemy != null) {
                     enemy.TakeDamage(damage);

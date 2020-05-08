@@ -807,7 +807,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: aa96ef919a8734c0d9ba040bcec1cec9,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: aa96ef919a8734c0d9ba040bcec1cec9,
         type: 3}
@@ -6271,7 +6271,7 @@ MonoBehaviour:
   weapons:
   - {fileID: 1055940911}
   - {fileID: 1353805831}
-  currentWeapons: 00000000ffffffff
+  currentWeapons: 0000000001000000
   equippedWeapon: 0
 --- !u!1 &1017276173
 GameObject:
@@ -6415,7 +6415,7 @@ MonoBehaviour:
   magSize: 8
   currAmmo: 8
   reloadTime: 1.2
-  muzzleFlash: {fileID: 0}
+  muzzleFlash: {fileID: 1803217764}
   defaultImpact: {fileID: 100002, guid: 957385c45b877e645a128e11a3efb2f9, type: 3}
   enemyImpact: {fileID: 7810506457902242022, guid: abb271591ab264be7aedc316fcc7c8f8,
     type: 3}
@@ -11771,7 +11771,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 5dfc6ecc732614f57b05b0fd3973a61c,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5dfc6ecc732614f57b05b0fd3973a61c, type: 3}
@@ -31997,7 +31997,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2032722350
 RectTransform:
   m_ObjectHideFlags: 0
