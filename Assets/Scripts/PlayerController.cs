@@ -17,7 +17,6 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Update() {
-        /* Character Movement */
         if (characterController.isGrounded) {
             moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
             moveDirection *= speed;
@@ -32,6 +31,17 @@ public class PlayerController : MonoBehaviour {
             if (Input.GetButton("Jump")) {
                 moveDirection.y = jumpSpeed;
             }
+        } else {
+            float prevY = moveDirection.y;
+            float inAirMultiplier = 0.8f * speed;
+
+            if (Input.GetKey("left shift")) {
+                inAirMultiplier *= sprintMultiplier;
+            }
+
+            moveDirection = new Vector3(Input.GetAxis("Horizontal")*inAirMultiplier, 0.0f, Input.GetAxis("Vertical")*inAirMultiplier);
+            moveDirection = Camera.main.transform.TransformDirection(moveDirection);
+            moveDirection.y = prevY;
         }
 
         moveDirection.y -= gravity * Time.deltaTime;

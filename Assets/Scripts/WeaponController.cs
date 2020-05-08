@@ -103,7 +103,7 @@ public class WeaponController : MonoBehaviour {
             UpdateInfo();
         }
 
-        if (currAmmo <= 0) StartCoroutine(Reload());
+        if (currAmmo <= 0 && reserveAmmo > 0) StartCoroutine(Reload());
     }
 
     IEnumerator Reload() {
