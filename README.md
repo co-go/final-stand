@@ -1,8 +1,10 @@
 # Last Stand
-> Zombie survival game
+> Survival game
 
 # Goals
 - [x] Initial Github Setup
+- [x] Character Movement (Sprinting, Jumping)
+- [x] Camera first-person freelook
 - [ ] Character Development
 - [ ] Level Design
 
