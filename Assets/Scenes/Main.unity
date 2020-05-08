@@ -257,6 +257,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cow
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 8cb71a3831faa4a3c9fcbeea68a337e9,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8cb71a3831faa4a3c9fcbeea68a337e9, type: 3}
 --- !u!1 &119941193
@@ -633,8 +638,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   paused: 0
   axes: 2
-  sensitivityX: 15
-  sensitivityY: 15
+  sensitivityX: 10
+  sensitivityY: 10
   minimumX: -360
   maximumX: 360
   minimumY: -60
@@ -1241,8 +1246,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   paused: 0
   axes: 1
-  sensitivityX: 15
-  sensitivityY: 15
+  sensitivityX: 10
+  sensitivityY: 10
   minimumX: -360
   maximumX: 360
   minimumY: -60
@@ -1373,6 +1378,10 @@ MonoBehaviour:
   damage: 10
   range: 100
   muzzleFlash: {fileID: 1803217764}
+  defaultImpact: {fileID: 100002, guid: 957385c45b877e645a128e11a3efb2f9, type: 3}
+  enemyImpact: {fileID: 7810506457902242022, guid: abb271591ab264be7aedc316fcc7c8f8,
+    type: 3}
+  dirtImpact: {fileID: 100002, guid: 2f9348d6583cde14eb0d82bb9732647e, type: 3}
 --- !u!1 &1017276173
 GameObject:
   m_ObjectHideFlags: 0
@@ -1961,7 +1970,7 @@ GameObject:
   - component: {fileID: 1361575782}
   m_Layer: 0
   m_Name: Ground
-  m_TagString: Untagged
+  m_TagString: Dirt
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
