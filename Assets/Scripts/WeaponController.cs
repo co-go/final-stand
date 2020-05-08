@@ -17,6 +17,7 @@ public class WeaponController : MonoBehaviour {
     public float currAmmo;
     public float reloadTime;
     private bool isReloading = false;
+    private IEnumerator reloadCoroutine;
 
     public ParticleSystem muzzleFlash;
     public GameObject defaultImpact;
@@ -39,6 +40,11 @@ public class WeaponController : MonoBehaviour {
         ReloadBar.fillAmount = 0;
     }
 
+    void OnEnable() {
+        // fix occasional artifact from canceling reload
+        ReloadBar.fillAmount = 0;
+    }
+
     void SendWeaponState() {
         inventory.UpdateWeaponInfo(equipSlot == 0, transform.name, currAmmo, reserveAmmo);
     }
@@ -52,7 +58,8 @@ public class WeaponController : MonoBehaviour {
             }
 
             if (Input.GetKeyDown("r") && reserveAmmo > 0 && currAmmo < magSize && !isReloading) {
-                StartCoroutine(Reload());
+                reloadCoroutine = Reload();
+                StartCoroutine(reloadCoroutine);
             }
         } else {
             ReloadBar.fillAmount += 1.0f / reloadTime * Time.deltaTime;
@@ -85,7 +92,7 @@ public class WeaponController : MonoBehaviour {
                     Instantiate(defaultImpact, hit.point, Quaternion.LookRotation(hit.normal));
                 }
             }
-            
+
             SendWeaponState();
         }
 
@@ -94,7 +101,6 @@ public class WeaponController : MonoBehaviour {
 
     IEnumerator Reload() {
         isReloading = true;
-        Debug.Log("RELOADING");
         animator.SetTrigger("reload");
         yield return new WaitForSeconds(reloadTime);
         isReloading = false;
@@ -115,5 +121,16 @@ public class WeaponController : MonoBehaviour {
         }
 
         SendWeaponState();
+        reloadCoroutine = null;
+    }
+
+    public void CancelReload() {
+        if (reloadCoroutine != null) {
+            Debug.Log("we canceling reload for: " + transform.name);
+            StopCoroutine(reloadCoroutine);
+            isReloading = false;
+            animator.enabled = false;
+            animator.enabled = true;
+        }
     }
 }

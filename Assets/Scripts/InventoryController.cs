@@ -12,8 +12,8 @@ public class InventoryController : MonoBehaviour {
     public GameObject secondaryHighlight;
 
     public GameObject[] weapons;
-    // if specify a -1 in this array, will effectively be an empty spot
-    // public int[] currentWeapons = new int[] {0, -1};
+
+    // if specify a -1 in this array, it will be treated as an empty spot
     public int[] currentWeapons = new int[] {0, 1};
     public int equippedWeapon = 0;
 
@@ -26,9 +26,22 @@ public class InventoryController : MonoBehaviour {
 
     void Update() {
         // swap between weapons here
+        if (Input.GetKeyDown("1") && equippedWeapon != 0) {
+            weapons[currentWeapons[equippedWeapon]].GetComponent<WeaponController>().CancelReload();
+            weapons[currentWeapons[equippedWeapon]].SetActive(false);
+            weapons[currentWeapons[0]].SetActive(true);
+            equippedWeapon = 0;
+            UpdateHighlight();
+        } else if (Input.GetKeyDown("2") && equippedWeapon != 1) {
+            weapons[currentWeapons[equippedWeapon]].GetComponent<WeaponController>().CancelReload();
+            weapons[currentWeapons[equippedWeapon]].SetActive(false);
+            weapons[currentWeapons[1]].SetActive(true);
+            equippedWeapon = 1;
+            UpdateHighlight();
+        }
     }
 
-    void UpdateHighlight() {
+    public void UpdateHighlight() {
         if (equippedWeapon == 0) {
             primaryHighlight.SetActive(true);
             secondaryHighlight.SetActive(false);
@@ -46,6 +59,5 @@ public class InventoryController : MonoBehaviour {
             secondaryName.text = name;
             secondaryAmmo.text = currAmmo + " | " + reserveAmmo;
         }
-        
     }
 }
