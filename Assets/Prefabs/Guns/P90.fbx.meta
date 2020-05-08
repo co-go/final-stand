@@ -12,7 +12,22 @@ ModelImporter:
   - first:
       74: -3265759714822878061
     second: P90|Fire
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.001
+    second: {fileID: 2100000, guid: 5e99dfb43c28942f595b1ca00aecedc5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.003
+    second: {fileID: 2100000, guid: 77dc420d6a43646239083c388c6d2ad2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.004
+    second: {fileID: 2100000, guid: 1a15f44040759482ca462d1e033347a9, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

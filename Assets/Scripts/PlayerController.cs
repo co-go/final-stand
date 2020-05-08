@@ -39,8 +39,9 @@ public class PlayerController : MonoBehaviour {
                 inAirMultiplier *= sprintMultiplier;
             }
 
-            moveDirection = new Vector3(Input.GetAxis("Horizontal")*inAirMultiplier, 0.0f, Input.GetAxis("Vertical")*inAirMultiplier);
+            moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
             moveDirection = Camera.main.transform.TransformDirection(moveDirection);
+            moveDirection *= inAirMultiplier;
             moveDirection.y = prevY;
         }
 

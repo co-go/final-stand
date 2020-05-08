@@ -4,31 +4,18 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class WeaponController : MonoBehaviour {
-    public GameObject pistol;
-
-    public GameObject Primary;
-    public GameObject PrimaryAmmo;
-    public GameObject PrimaryHighlight;
-    public GameObject Secondary;
-    public GameObject SecondaryAmmo;
-    public GameObject SecondaryHighlight;
-
     public Image ReloadBar;
 
-    private Text primaryText;
-    private Text primaryAmmoText;
-    private Text secondaryText;
-    private Text secondaryAmmoText;
-
-    public float damage = 10f;
     public float range = 100f;
-    public float fireRate = 10f;
+    public float damage;
+    public float fireRate;
     public float impactForce = 100f;
+    public bool fullAuto = false;
 
-    public float reserveAmmo = 60f;
-    public float magSize = 8f;
-    public float currAmmo = 8f;
-    public float reloadTime = 1.2f;
+    public float reserveAmmo;
+    public float magSize;
+    public float currAmmo;
+    public float reloadTime;
     private bool isReloading = false;
 
     public ParticleSystem muzzleFlash;
@@ -36,39 +23,38 @@ public class WeaponController : MonoBehaviour {
     public GameObject enemyImpact;
     public GameObject dirtImpact;
 
+    public int equipSlot = -1;
+
+    private InventoryController inventory;
     private Animator animator;
     private float nextTimeToFire = 0f;
 
     void Start() {
-        primaryText = Primary.GetComponent<Text>();
-        primaryAmmoText = PrimaryAmmo.GetComponent<Text>();
-        secondaryText = Secondary.GetComponent<Text>();
-        secondaryAmmoText = SecondaryAmmo.GetComponent<Text>();
-
         ReloadBar = ReloadBar.GetComponent<Image>();
+        animator = GetComponent<Animator>();
+        inventory = transform.parent.transform.parent.GetComponent<InventoryController>();
 
-        animator = pistol.GetComponent<Animator>();
+        if (equipSlot != -1) SendWeaponState();
 
         ReloadBar.fillAmount = 0;
-        UpdateInfo();
+    }
+
+    void SendWeaponState() {
+        inventory.UpdateWeaponInfo(equipSlot == 0, transform.name, currAmmo, reserveAmmo);
     }
 
     void Update() {
-        // Full-auto
-        // if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire) 
+        if (!isReloading) {
+            if (Time.time >= nextTimeToFire && (Input.GetButton("Fire1") && fullAuto || Input.GetButtonDown("Fire1") && !fullAuto)) {
+                // set the next firing time to a point in the future (relative to current)
+                nextTimeToFire = Time.time + 1f / fireRate;
+                Shoot();
+            }
 
-        // Semi-auto firing
-        if (Input.GetButtonDown("Fire1") && Time.time >= nextTimeToFire && !isReloading) {
-            // set the next firing time to a point in the future (relative to current)
-            nextTimeToFire = Time.time + 1f / fireRate;
-            Shoot();
-        }
-
-        if (Input.GetKeyDown("r") && reserveAmmo > 0 && currAmmo < magSize && !isReloading) {
-            StartCoroutine(Reload());
-        }
-
-        if (isReloading) {
+            if (Input.GetKeyDown("r") && reserveAmmo > 0 && currAmmo < magSize && !isReloading) {
+                StartCoroutine(Reload());
+            }
+        } else {
             ReloadBar.fillAmount += 1.0f / reloadTime * Time.deltaTime;
         }
     }
@@ -99,8 +85,8 @@ public class WeaponController : MonoBehaviour {
                     Instantiate(defaultImpact, hit.point, Quaternion.LookRotation(hit.normal));
                 }
             }
-
-            UpdateInfo();
+            
+            SendWeaponState();
         }
 
         if (currAmmo <= 0 && reserveAmmo > 0) StartCoroutine(Reload());
@@ -108,6 +94,7 @@ public class WeaponController : MonoBehaviour {
 
     IEnumerator Reload() {
         isReloading = true;
+        Debug.Log("RELOADING");
         animator.SetTrigger("reload");
         yield return new WaitForSeconds(reloadTime);
         isReloading = false;
@@ -127,10 +114,6 @@ public class WeaponController : MonoBehaviour {
             reserveAmmo -= currAmmo;
         }
 
-        UpdateInfo();
-    }
-
-    void UpdateInfo() {
-        primaryAmmoText.text = currAmmo + " | " + reserveAmmo;
+        SendWeaponState();
     }
 }

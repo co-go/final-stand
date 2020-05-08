@@ -3,7 +3,13 @@ guid: 3c43cd1c334514d51a2de53308829dc7
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - ReloadBar: {instanceID: 0}
+  - muzzleFlash: {instanceID: 0}
+  - defaultImpact: {fileID: 100002, guid: 957385c45b877e645a128e11a3efb2f9, type: 3}
+  - enemyImpact: {fileID: 7810506457902242022, guid: abb271591ab264be7aedc316fcc7c8f8,
+      type: 3}
+  - dirtImpact: {fileID: 100002, guid: 2f9348d6583cde14eb0d82bb9732647e, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
