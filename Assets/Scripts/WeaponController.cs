@@ -13,6 +13,8 @@ public class WeaponController : MonoBehaviour {
     public GameObject SecondaryAmmo;
     public GameObject SecondaryHighlight;
 
+    public Image ReloadBar;
+
     private Text primaryText;
     private Text primaryAmmoText;
     private Text secondaryText;
@@ -26,6 +28,8 @@ public class WeaponController : MonoBehaviour {
     public float reserveAmmo = 60f;
     public float magSize = 8f;
     public float currAmmo = 8f;
+    public float reloadTime = 1.2f;
+    private bool isReloading = false;
 
     public ParticleSystem muzzleFlash;
     public GameObject defaultImpact;
@@ -41,7 +45,12 @@ public class WeaponController : MonoBehaviour {
         secondaryText = Secondary.GetComponent<Text>();
         secondaryAmmoText = SecondaryAmmo.GetComponent<Text>();
 
+        ReloadBar = ReloadBar.GetComponent<Image>();
+
         animator = pistol.GetComponent<Animator>();
+
+        ReloadBar.fillAmount = 0;
+        UpdateInfo();
     }
 
     void Update() {
@@ -49,14 +58,18 @@ public class WeaponController : MonoBehaviour {
         // if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire) 
 
         // Semi-auto firing
-        if (Input.GetButtonDown("Fire1") && Time.time >= nextTimeToFire) {
+        if (Input.GetButtonDown("Fire1") && Time.time >= nextTimeToFire && !isReloading) {
             // set the next firing time to a point in the future (relative to current)
             nextTimeToFire = Time.time + 1f / fireRate;
             Shoot();
         }
 
-        if (Input.GetKeyDown("r") && reserveAmmo > 0) {
-            Reload();
+        if (Input.GetKeyDown("r") && reserveAmmo > 0 && currAmmo < magSize && !isReloading) {
+            StartCoroutine(Reload());
+        }
+
+        if (isReloading) {
+            ReloadBar.fillAmount += 1.0f / reloadTime * Time.deltaTime;
         }
     }
 
@@ -90,10 +103,16 @@ public class WeaponController : MonoBehaviour {
             UpdateInfo();
         }
 
-        if (currAmmo <= 0) Reload();
+        if (currAmmo <= 0) StartCoroutine(Reload());
     }
 
-    void Reload() {
+    IEnumerator Reload() {
+        isReloading = true;
+        animator.SetTrigger("reload");
+        yield return new WaitForSeconds(reloadTime);
+        isReloading = false;
+        ReloadBar.fillAmount = 0;
+
         if (reserveAmmo > 0) {
             // if we have bullets in mag, return to pool
             reserveAmmo += currAmmo;
@@ -108,7 +127,6 @@ public class WeaponController : MonoBehaviour {
             reserveAmmo -= currAmmo;
         }
 
-        Debug.Log("Reloading... ");
         UpdateInfo();
     }
 
