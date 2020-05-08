@@ -7,6 +7,7 @@ public class WeaponController : MonoBehaviour {
 
     public float damage = 10f;
     public float range = 100f;
+    public float impactForce = 100f;
     public ParticleSystem muzzleFlash;
     public GameObject defaultImpact;
     public GameObject enemyImpact;
@@ -33,6 +34,10 @@ public class WeaponController : MonoBehaviour {
             EnemyController enemy = hit.transform.GetComponent<EnemyController>();
             if (enemy != null) {
                 enemy.TakeDamage(damage);
+            }
+
+            if (hit.rigidbody != null) {
+                hit.rigidbody.AddForce(-hit.normal * impactForce);
             }
 
             if (hit.transform.tag == "Dirt") {
