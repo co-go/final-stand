@@ -5,6 +5,9 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
     CharacterController characterController;
 
+    public float damage = 10f;
+    public float range = 100f;
+
     public float speed = 6.0f;
     public float jumpSpeed = 8.0f;
     public float gravity = 20.0f;
@@ -17,6 +20,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Update() {
+        /* Character Movement */
         if (characterController.isGrounded) {
             moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
             moveDirection *= speed;
@@ -34,7 +38,23 @@ public class PlayerController : MonoBehaviour {
         }
 
         moveDirection.y -= gravity * Time.deltaTime;
-
         characterController.Move(moveDirection * Time.deltaTime);
+
+        /* Shooting Mechanics */
+        if (Input.GetButtonDown("Fire1")) {
+            Shoot();
+        }
+    }
+
+    void Shoot() {
+        RaycastHit hit;
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, range)) {
+            Debug.Log(hit.transform.name);
+            EnemyController enemy = hit.transform.GetComponent<EnemyController>();
+            if (enemy != null) {
+                Debug.Log("pew pew");
+                enemy.TakeDamage(damage);
+            }
+        }
     }
 }

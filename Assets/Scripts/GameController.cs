@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour {
     public GameObject pauseMenu;
+    public GameObject crosshair;
     public GameObject player;
     public Camera mainCamera;
 
@@ -13,6 +14,7 @@ public class GameController : MonoBehaviour {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         pauseMenu.SetActive(false);
+        crosshair.SetActive(true);
     }
 
     void Update() {
@@ -38,5 +40,6 @@ public class GameController : MonoBehaviour {
         mainCamera.GetComponent<MouseLook>().Pause(paused);
 
         pauseMenu.SetActive(paused);
+        crosshair.SetActive(!paused);
   }
 }
