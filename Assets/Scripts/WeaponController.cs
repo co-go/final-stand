@@ -7,20 +7,29 @@ public class WeaponController : MonoBehaviour {
 
     public float damage = 10f;
     public float range = 100f;
+    public float fireRate = 10f;
     public float impactForce = 100f;
+
     public ParticleSystem muzzleFlash;
     public GameObject defaultImpact;
     public GameObject enemyImpact;
     public GameObject dirtImpact;
 
     private Animator animator;
+    private float nextTimeToFire = 0f;
 
     void Start() {
         animator = pistol.GetComponent<Animator>();
     }
 
     void Update() {
-        if (Input.GetButtonDown("Fire1")) {
+        // Full-auto
+        // if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire) 
+
+        // Semi-auto firing
+        if (Input.GetButtonDown("Fire1") && Time.time >= nextTimeToFire) {
+            // set the next firing time to a point in the future (relative to current)
+            nextTimeToFire = Time.time + 1f / fireRate;
             Shoot();
         }
     }
