@@ -135,4 +135,9 @@ public class WeaponController : MonoBehaviour {
             animator.enabled = true;
         }
     }
+
+    public void RefillAmmo() {
+        reserveAmmo += magSize * 6;
+        SendWeaponState();
+    }
 }

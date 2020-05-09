@@ -20,7 +20,6 @@ public class GameController : MonoBehaviour {
         Cursor.lockState = CursorLockMode.Locked;
         pauseMenu.SetActive(false);
         crosshair.SetActive(true);
-        Debug.Log(Screen.height);
         UpdateUIScale();
     }
 

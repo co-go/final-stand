@@ -14,7 +14,7 @@ public class InventoryController : MonoBehaviour {
     public GameObject[] weapons;
 
     // if specify a -1 in this array, it will be treated as an empty spot
-    public int[] currentWeapons = new int[] {0, 1};
+    public int[] currentWeapons = new int[] {0, -1};
     public int equippedWeapon = 0;
 
     void Start() {
@@ -27,18 +27,24 @@ public class InventoryController : MonoBehaviour {
     void Update() {
         // swap between weapons here
         if (Input.GetKeyDown("1") && equippedWeapon != 0) {
-            weapons[currentWeapons[equippedWeapon]].GetComponent<WeaponController>().CancelReload();
-            weapons[currentWeapons[equippedWeapon]].SetActive(false);
-            weapons[currentWeapons[0]].SetActive(true);
-            equippedWeapon = 0;
-            UpdateHighlight();
-        } else if (Input.GetKeyDown("2") && equippedWeapon != 1) {
-            weapons[currentWeapons[equippedWeapon]].GetComponent<WeaponController>().CancelReload();
-            weapons[currentWeapons[equippedWeapon]].SetActive(false);
-            weapons[currentWeapons[1]].SetActive(true);
-            equippedWeapon = 1;
-            UpdateHighlight();
+            SwapToPrimary();
+        } else if (Input.GetKeyDown("2") && equippedWeapon != 1 && currentWeapons[1] != -1) {
+            SwapToSecondary();
         }
+    }
+
+    private void SwapToPrimary() {
+        HolsterWeapon();
+        equippedWeapon = 0;
+        DrawWeapon();
+        UpdateHighlight();
+    }
+
+    private void SwapToSecondary() {
+        HolsterWeapon();
+        equippedWeapon = 1;
+        DrawWeapon();
+        UpdateHighlight();
     }
 
     public void UpdateHighlight() {
@@ -59,5 +65,34 @@ public class InventoryController : MonoBehaviour {
             secondaryName.text = name;
             secondaryAmmo.text = currAmmo + " | " + reserveAmmo;
         }
+    }
+
+    public bool HasWeapon(int weaponIndex) {
+        return currentWeapons[0] == weaponIndex || currentWeapons[1] == weaponIndex;
+    }
+
+    public void GetNewWeapon(int weaponIndex) {
+        // if we don't have a second weapon, put it there
+        if (currentWeapons[1] == -1) {
+            currentWeapons[1] = weaponIndex;
+            SwapToSecondary();
+        }
+
+        HolsterWeapon();
+        currentWeapons[equippedWeapon] = weaponIndex;
+        DrawWeapon();
+    }
+
+    public void PurchaseAmmo(int weaponIndex) {
+        weapons[weaponIndex].GetComponent<WeaponController>().RefillAmmo();
+    }
+
+    private void HolsterWeapon() {
+        weapons[currentWeapons[equippedWeapon]].GetComponent<WeaponController>().CancelReload();
+        weapons[currentWeapons[equippedWeapon]].SetActive(false);
+    }
+
+    private void DrawWeapon() {
+        weapons[currentWeapons[equippedWeapon]].SetActive(true);
     }
 }
