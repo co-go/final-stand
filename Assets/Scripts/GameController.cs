@@ -6,20 +6,32 @@ public class GameController : MonoBehaviour {
     public GameObject pauseMenu;
     public GameObject crosshair;
     public GameObject player;
+    public GameObject playerUI;
+    public GameObject weaponUI;
     public Camera mainCamera;
+    public float scale;
 
     bool paused = false;
+    int screenWidth = Screen.width;
+    int screenHeight = Screen.height;
 
     void Start() {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         pauseMenu.SetActive(false);
         crosshair.SetActive(true);
+        Debug.Log(Screen.height);
+        UpdateUIScale();
     }
 
     void Update() {
         if (Input.GetKeyDown("escape")) {
             TogglePause();
+        }
+
+        if (Screen.height != screenHeight || Screen.width != screenWidth)
+        {
+            UpdateUIScale();
         }
     }
 
@@ -41,5 +53,13 @@ public class GameController : MonoBehaviour {
 
         pauseMenu.SetActive(paused);
         crosshair.SetActive(!paused);
-  }
+    }
+
+    private void UpdateUIScale()
+    {
+        screenWidth = Screen.width;
+        screenHeight = Screen.height;
+        playerUI.transform.localScale = new Vector3(screenWidth / 1850.0f * scale, screenHeight / 950.0f * scale, 1.0f);
+        weaponUI.transform.localScale = new Vector3(screenWidth / 1850.0f * scale, screenHeight / 950.0f * scale, 1.0f);
+    }
 }
