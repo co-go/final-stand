@@ -30,6 +30,11 @@ public class WeaponController : MonoBehaviour {
     private Animator animator;
     private float nextTimeToFire = 0f;
 
+    public AudioClip fireAudioClip;
+    public AudioClip reloadAudioClip;
+    private AudioSource fireAudioSource;
+    private AudioSource reloadAudioSource;
+
     void Start() {
         ReloadBar = ReloadBar.GetComponent<Image>();
         animator = GetComponent<Animator>();
@@ -38,6 +43,9 @@ public class WeaponController : MonoBehaviour {
         if (equipSlot != -1) SendWeaponState();
 
         ReloadBar.fillAmount = 0;
+
+        fireAudioSource = AddAudio(false, false, 1.0f, 1.0f, fireAudioClip);
+        reloadAudioSource = AddAudio(false, false, 1.0f, 0.5f, reloadAudioClip);
     }
 
     void OnEnable() {
@@ -69,6 +77,7 @@ public class WeaponController : MonoBehaviour {
     void Shoot() {
         if (currAmmo > 0) {
             muzzleFlash.Play();
+            fireAudioSource.Play();
             animator.SetTrigger("fire");
 
             currAmmo -= 1;
@@ -104,6 +113,7 @@ public class WeaponController : MonoBehaviour {
     IEnumerator Reload() {
         isReloading = true;
         animator.SetTrigger("reload");
+        reloadAudioSource.Play();
         yield return new WaitForSeconds(reloadTime);
         isReloading = false;
         ReloadBar.fillAmount = 0;
@@ -139,5 +149,17 @@ public class WeaponController : MonoBehaviour {
     public void RefillAmmo() {
         reserveAmmo += magSize * 6;
         SendWeaponState();
+    }
+
+    /* Creates new AudioSource component */
+    public AudioSource AddAudio(bool loop, bool playAwake, float vol, float pitch, AudioClip clip)
+    {
+        AudioSource newAudio = gameObject.AddComponent<AudioSource>();
+        newAudio.clip = clip;
+        newAudio.loop = loop;
+        newAudio.playOnAwake = playAwake;
+        newAudio.volume = vol;
+        newAudio.pitch = pitch;
+        return newAudio;
     }
 }
