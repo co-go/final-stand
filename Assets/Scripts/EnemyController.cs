@@ -8,16 +8,19 @@ public class EnemyController : MonoBehaviour {
 
     public Transform player;
     public float health = 100f;
-    public float minDist = 3.0f;
+    public float minDist = 2.0f;
     public float moveSpeed = 1.0f;
     public float maxSpeed = 5.0f;
     public float gravity = 20.0f;
+    public float nextTimeToAttack = 0f;
+    public bool hasHit = false;
     public bool on;
 
     private Vector3 playerLocation;
     private Vector3 moveDirection;
 
     private bool alive = true;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -53,13 +56,26 @@ public class EnemyController : MonoBehaviour {
                 moveDirection.y -= gravity;
                 characterController.Move(moveDirection * Time.deltaTime);
             }
+            else
+            {
+                if (Time.time >= nextTimeToAttack)
+                {
+                    animator.SetTrigger("Attack");
+                    nextTimeToAttack = Time.time + 2.0f;
+                }
+            }
+
+            if (hasHit && Time.time >= nextTimeToAttack)
+            {
+                hasHit = false;
+            }
         }
     }
 
     public void TakeDamage(float damage) {
         health -= damage;
         if (health <= 0f) {
-            animator.SetBool("Killed", true);
+            animator.SetTrigger("Killed");
             alive = false;
             Invoke("Die", 5.0f);
         }

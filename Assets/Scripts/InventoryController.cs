@@ -37,13 +37,12 @@ public class InventoryController : MonoBehaviour {
     }
 
     IEnumerator SwapWeapons(int swapTo) {
-        weaponHolder.SetBool("Swapping", true);
+        weaponHolder.SetTrigger("Swapping");
         yield return new WaitForSeconds(swapTime);
         HolsterWeapon();
         equippedWeapon = swapTo - 1;
         DrawWeapon();
         UpdateHighlight();
-        weaponHolder.SetBool("Swapping", false);
     }
 
     public void UpdateHighlight() {

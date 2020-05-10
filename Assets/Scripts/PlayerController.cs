@@ -1,19 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
     CharacterController characterController;
 
+    public int health = 100;
     public float speed = 6.0f;
     public float jumpSpeed = 8.0f;
     public float gravity = 20.0f;
     public float sprintMultiplier = 2.0f;
 
+    public Text healthText;
+
     private Vector3 moveDirection = Vector3.zero;
 
     void Start() {
         characterController = GetComponent<CharacterController>();
+        healthText.text = health + " / 100";
     }
 
     void Update() {
@@ -47,5 +52,11 @@ public class PlayerController : MonoBehaviour {
 
         moveDirection.y -= gravity * Time.deltaTime;
         characterController.Move(moveDirection * Time.deltaTime);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+        healthText.text = health + " / 100";
     }
 }

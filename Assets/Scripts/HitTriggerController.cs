@@ -1,0 +1,33 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class HitTriggerController : MonoBehaviour
+{
+    public int damage = 20;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    private void OnTriggerEnter(Collider other)
+    { 
+        if (other.tag == "Player")
+        {
+            EnemyController enemy = transform.root.GetComponent<EnemyController>();
+            if (enemy.nextTimeToAttack > Time.time && !enemy.hasHit)
+            {
+                enemy.hasHit = true;
+                other.GetComponent<PlayerController>().TakeDamage(damage);
+            }
+        }
+    }
+}
