@@ -17,7 +17,7 @@ public class EnemyController : MonoBehaviour {
     private Vector3 playerLocation;
     private Vector3 moveDirection;
 
-
+    private bool alive = true;
 
     // Start is called before the first frame update
     void Start()
@@ -31,7 +31,7 @@ public class EnemyController : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (on)
+        if (on && alive)
         {
             playerLocation = new Vector3(player.position.x, 0.0f, player.position.z);
             transform.LookAt(playerLocation);
@@ -59,7 +59,9 @@ public class EnemyController : MonoBehaviour {
     public void TakeDamage(float damage) {
         health -= damage;
         if (health <= 0f) {
-            Die();
+            animator.SetBool("Killed", true);
+            alive = false;
+            Invoke("Die", 5.0f);
         }
     }
 
