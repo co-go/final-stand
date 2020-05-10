@@ -38,7 +38,7 @@ public class WeaponController : MonoBehaviour {
     void Start() {
         ReloadBar = ReloadBar.GetComponent<Image>();
         animator = GetComponent<Animator>();
-        inventory = transform.parent.transform.parent.GetComponent<InventoryController>();
+        inventory = transform.parent.transform.parent.transform.parent.GetComponent<InventoryController>();
 
         if (equipSlot != -1) SendWeaponState();
 

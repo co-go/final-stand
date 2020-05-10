@@ -11,6 +11,9 @@ public class InventoryController : MonoBehaviour {
     public Text secondaryAmmo;
     public GameObject secondaryHighlight;
 
+    public Animator weaponHolder;
+    public float swapTime;
+
     public GameObject[] weapons;
 
     // if specify a -1 in this array, it will be treated as an empty spot
@@ -27,24 +30,20 @@ public class InventoryController : MonoBehaviour {
     void Update() {
         // swap between weapons here
         if (Input.GetKeyDown("1") && equippedWeapon != 0) {
-            SwapToPrimary();
+            StartCoroutine(SwapWeapons(1));
         } else if (Input.GetKeyDown("2") && equippedWeapon != 1 && currentWeapons[1] != -1) {
-            SwapToSecondary();
+            StartCoroutine(SwapWeapons(2));
         }
     }
 
-    private void SwapToPrimary() {
+    IEnumerator SwapWeapons(int swapTo) {
+        weaponHolder.SetBool("Swapping", true);
+        yield return new WaitForSeconds(swapTime);
         HolsterWeapon();
-        equippedWeapon = 0;
+        equippedWeapon = swapTo - 1;
         DrawWeapon();
         UpdateHighlight();
-    }
-
-    private void SwapToSecondary() {
-        HolsterWeapon();
-        equippedWeapon = 1;
-        DrawWeapon();
-        UpdateHighlight();
+        weaponHolder.SetBool("Swapping", false);
     }
 
     public void UpdateHighlight() {
@@ -75,12 +74,14 @@ public class InventoryController : MonoBehaviour {
         // if we don't have a second weapon, put it there
         if (currentWeapons[1] == -1) {
             currentWeapons[1] = weaponIndex;
-            SwapToSecondary();
+            StartCoroutine(SwapWeapons(2));
         }
-
-        HolsterWeapon();
-        currentWeapons[equippedWeapon] = weaponIndex;
-        DrawWeapon();
+        else
+        {
+            HolsterWeapon();
+            currentWeapons[equippedWeapon] = weaponIndex;
+            DrawWeapon();
+        }
     }
 
     public void PurchaseAmmo(int weaponIndex) {
