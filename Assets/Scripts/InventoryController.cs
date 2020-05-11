@@ -88,7 +88,6 @@ public class InventoryController : MonoBehaviour {
     }
 
     private void HolsterWeapon() {
-        weapons[currentWeapons[equippedWeapon]].GetComponent<WeaponController>().CancelReload();
         weapons[currentWeapons[equippedWeapon]].SetActive(false);
     }
 

@@ -53,6 +53,13 @@ public class WeaponController : MonoBehaviour {
         ReloadBar.fillAmount = 0;
     }
 
+    void OnDisable() {
+        if (reloadCoroutine != null) StopCoroutine(reloadCoroutine);
+        isReloading = false;
+        animator.enabled = false;
+        animator.enabled = true;
+    }
+
     void SendWeaponState() {
         inventory.UpdateWeaponInfo(equipSlot == 0, transform.name, currAmmo, reserveAmmo);
     }
@@ -65,7 +72,7 @@ public class WeaponController : MonoBehaviour {
                 Shoot();
             }
 
-            if (Input.GetKeyDown("r") && reserveAmmo > 0 && currAmmo < magSize && !isReloading) {
+            if (Input.GetKeyDown("r") && reserveAmmo > 0 && currAmmo < magSize) {
                 reloadCoroutine = Reload();
                 StartCoroutine(reloadCoroutine);
             }
@@ -134,16 +141,6 @@ public class WeaponController : MonoBehaviour {
 
         SendWeaponState();
         reloadCoroutine = null;
-    }
-
-    public void CancelReload() {
-        if (reloadCoroutine != null) {
-            Debug.Log("we canceling reload for: " + transform.name);
-            StopCoroutine(reloadCoroutine);
-            isReloading = false;
-            animator.enabled = false;
-            animator.enabled = true;
-        }
     }
 
     public void RefillAmmo() {
