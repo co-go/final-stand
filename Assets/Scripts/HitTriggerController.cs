@@ -6,10 +6,12 @@ public class HitTriggerController : MonoBehaviour
 {
     public int damage = 20;
 
+    private GameObject enemy;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        enemy = transform.root.gameObject;
     }
 
     // Update is called once per frame
@@ -29,5 +31,10 @@ public class HitTriggerController : MonoBehaviour
                 other.GetComponent<PlayerController>().TakeDamage(damage);
             }
         }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        enemy.GetComponent<EnemyController>().TakeDamage(damage);
     }
 }

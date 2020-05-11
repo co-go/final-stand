@@ -94,8 +94,14 @@ public class WeaponController : MonoBehaviour {
             RaycastHit hit;
             if (Physics.Raycast(origin, Camera.main.transform.forward, out hit, range)) {
                 EnemyController enemy = hit.transform.GetComponent<EnemyController>();
+                HitTriggerController enemyHand = hit.transform.GetComponent<HitTriggerController>();
+
                 if (enemy != null) {
                     enemy.TakeDamage(damage);
+                }
+                else if (enemyHand != null)
+                {
+                    enemyHand.TakeDamage(damage);
                 }
 
                 if (hit.rigidbody != null) {
