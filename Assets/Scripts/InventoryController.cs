@@ -14,6 +14,9 @@ public class InventoryController : MonoBehaviour {
     public Animator weaponHolder;
     public float swapTime;
 
+    public Text pointsText;
+    public int points = 500;
+
     public GameObject[] weapons;
 
     // if specify a -1 in this array, it will be treated as an empty spot
@@ -25,6 +28,7 @@ public class InventoryController : MonoBehaviour {
         primaryAmmo = primaryAmmo.GetComponent<Text>();
         secondaryName = secondaryName.GetComponent<Text>();
         secondaryAmmo = secondaryAmmo.GetComponent<Text>();
+        AddPoints(0);
     }
 
     void Update() {
@@ -69,7 +73,7 @@ public class InventoryController : MonoBehaviour {
         return currentWeapons[0] == weaponIndex || currentWeapons[1] == weaponIndex;
     }
 
-    public void GetNewWeapon(int weaponIndex) {
+    public void GetNewWeapon(int weaponIndex, int weaponCost) {
         // if we don't have a second weapon, put it there
         if (currentWeapons[1] == -1) {
             currentWeapons[1] = weaponIndex;
@@ -81,10 +85,25 @@ public class InventoryController : MonoBehaviour {
             currentWeapons[equippedWeapon] = weaponIndex;
             DrawWeapon();
         }
+        points -= weaponCost;
+        UpdatePointsText();
     }
 
-    public void PurchaseAmmo(int weaponIndex) {
+    public void PurchaseAmmo(int weaponIndex, int ammoCost) {
         weapons[weaponIndex].GetComponent<WeaponController>().RefillAmmo();
+        points -= ammoCost;
+        UpdatePointsText();
+    }
+
+    public void AddPoints(int newPoints)
+    {
+        points += newPoints;
+        UpdatePointsText();
+    }
+
+    private void UpdatePointsText()
+    {
+        pointsText.text = "Points: " + points;
     }
 
     private void HolsterWeapon() {
