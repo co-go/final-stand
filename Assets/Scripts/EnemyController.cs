@@ -82,6 +82,7 @@ public class EnemyController : MonoBehaviour {
             animator.SetTrigger("Killed");
             if (alive) inventoryController.AddPoints(pointsOnDeath);
             alive = false;
+            characterController.enabled = false;
             Invoke("Die", 5.0f);
         }
     }
