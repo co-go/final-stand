@@ -18599,9 +18599,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
-  minDist: 2
-  moveSpeed: 1
-  maxSpeed: 5
+  minDist: 1
+  moveSpeed: 2
+  maxSpeed: 6
   gravity: 20
   nextTimeToAttack: 0
   pointsOnDeath: 50
