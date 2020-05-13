@@ -101,6 +101,12 @@ public class InventoryController : MonoBehaviour {
         UpdatePointsText();
     }
 
+    public void SpendPoints(int cost)
+    {
+        points -= cost;
+        UpdatePointsText();
+    }
+
     private void UpdatePointsText()
     {
         pointsText.text = "Points: " + points;
