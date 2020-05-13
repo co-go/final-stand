@@ -7237,6 +7237,7 @@ MonoBehaviour:
   fullAuto: 0
   reserveAmmo: 60
   magSize: 8
+  numExtraMags: 10
   currAmmo: 8
   reloadTime: 1.2
   muzzleFlash: {fileID: 1803217764}
@@ -12771,8 +12772,9 @@ MonoBehaviour:
   fireRate: 8
   impactForce: 5
   fullAuto: 1
-  reserveAmmo: 360
+  reserveAmmo: 240
   magSize: 30
+  numExtraMags: 8
   currAmmo: 30
   reloadTime: 1.8
   muzzleFlash: {fileID: 1351690561}

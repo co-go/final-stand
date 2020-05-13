@@ -92,9 +92,14 @@ public class InventoryController : MonoBehaviour {
     }
 
     public void PurchaseAmmo(int weaponIndex, int ammoCost) {
-        weapons[weaponIndex].GetComponent<WeaponController>().RefillAmmo();
-        points -= ammoCost;
-        UpdatePointsText();
+        WeaponController weaponController = weapons[weaponIndex].GetComponent<WeaponController>();
+
+        if (weaponController.reserveAmmo < weaponController.magSize * weaponController.numExtraMags)
+        {
+            weaponController.RefillAmmo();
+            points -= ammoCost;
+            UpdatePointsText();
+        }
     }
 
     public void AddPoints(int newPoints)

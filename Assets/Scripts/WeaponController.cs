@@ -14,6 +14,7 @@ public class WeaponController : MonoBehaviour {
 
     public float reserveAmmo;
     public float magSize;
+    public float numExtraMags;
     public float currAmmo;
     public float reloadTime;
     private bool isReloading = false;
@@ -162,7 +163,7 @@ public class WeaponController : MonoBehaviour {
     }
 
     public void RefillAmmo() {
-        reserveAmmo += magSize * 6;
+        reserveAmmo = magSize * numExtraMags;
         SendWeaponState();
     }
 
