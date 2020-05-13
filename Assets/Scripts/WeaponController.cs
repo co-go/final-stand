@@ -35,6 +35,8 @@ public class WeaponController : MonoBehaviour {
     private AudioSource fireAudioSource;
     private AudioSource reloadAudioSource;
 
+    private PlayerController playerController;
+
     void Start() {
         ReloadBar = ReloadBar.GetComponent<Image>();
         animator = GetComponent<Animator>();
@@ -46,6 +48,8 @@ public class WeaponController : MonoBehaviour {
 
         fireAudioSource = AddAudio(false, false, 1.0f, 1.0f, fireAudioClip);
         reloadAudioSource = AddAudio(false, false, 1.0f, 0.5f, reloadAudioClip);
+
+        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
     void OnEnable() {
@@ -65,19 +69,27 @@ public class WeaponController : MonoBehaviour {
     }
 
     void Update() {
-        if (!isReloading) {
-            if (Time.time >= nextTimeToFire && (Input.GetButton("Fire1") && fullAuto || Input.GetButtonDown("Fire1") && !fullAuto)) {
-                // set the next firing time to a point in the future (relative to current)
-                nextTimeToFire = Time.time + 1f / fireRate;
-                Shoot();
-            }
+        if (playerController.isAlive())
+        {
+            if (!isReloading)
+            {
+                if (Time.time >= nextTimeToFire && (Input.GetButton("Fire1") && fullAuto || Input.GetButtonDown("Fire1") && !fullAuto))
+                {
+                    // set the next firing time to a point in the future (relative to current)
+                    nextTimeToFire = Time.time + 1f / fireRate;
+                    Shoot();
+                }
 
-            if (Input.GetKeyDown("r") && reserveAmmo > 0 && currAmmo < magSize) {
-                reloadCoroutine = Reload();
-                StartCoroutine(reloadCoroutine);
+                if (Input.GetKeyDown("r") && reserveAmmo > 0 && currAmmo < magSize)
+                {
+                    reloadCoroutine = Reload();
+                    StartCoroutine(reloadCoroutine);
+                }
             }
-        } else {
-            ReloadBar.fillAmount += 1.0f / reloadTime * Time.deltaTime;
+            else
+            {
+                ReloadBar.fillAmount += 1.0f / reloadTime * Time.deltaTime;
+            }
         }
     }
 

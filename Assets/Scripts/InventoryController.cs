@@ -16,6 +16,7 @@ public class InventoryController : MonoBehaviour {
 
     public Text pointsText;
     public int points = 500;
+    private int score;
 
     public GameObject[] weapons;
 
@@ -28,7 +29,8 @@ public class InventoryController : MonoBehaviour {
         primaryAmmo = primaryAmmo.GetComponent<Text>();
         secondaryName = secondaryName.GetComponent<Text>();
         secondaryAmmo = secondaryAmmo.GetComponent<Text>();
-        AddPoints(0);
+        UpdatePointsText();
+        score = points;
     }
 
     void Update() {
@@ -98,6 +100,7 @@ public class InventoryController : MonoBehaviour {
     public void AddPoints(int newPoints)
     {
         points += newPoints;
+        score += newPoints;
         UpdatePointsText();
     }
 
@@ -105,6 +108,11 @@ public class InventoryController : MonoBehaviour {
     {
         points -= cost;
         UpdatePointsText();
+    }
+
+    public int GetScore()
+    {
+        return score;
     }
 
     private void UpdatePointsText()

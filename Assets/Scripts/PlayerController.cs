@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour {
 
     public Text healthText;
     public Text gameOverText;
+    public Text scoreText;
     public RectTransform healthBar;
     private float fullHealth;
     private float healthBarIncrement;
@@ -22,8 +23,11 @@ public class PlayerController : MonoBehaviour {
 
     private Vector3 moveDirection = Vector3.zero;
 
+    private InventoryController inventoryController;
+
     void Start() {
         characterController = GetComponent<CharacterController>();
+        inventoryController = GetComponent<InventoryController>();
         healthText.text = health + " / 100";
         fullHealth = healthBar.offsetMax.x;
         healthBarIncrement = (fullHealth - healthBar.offsetMin.x) / 5;
@@ -64,6 +68,14 @@ public class PlayerController : MonoBehaviour {
         if (alive) characterController.Move(moveDirection * Time.deltaTime);
     }
 
+    private void Die()
+    {
+        scoreText.text = "Score: " + inventoryController.GetScore();
+        healthBar.gameObject.SetActive(false);
+        gameOverText.gameObject.SetActive(true);
+        alive = false;
+    }
+
     public void TakeDamage(int damage)
     {
         health -= damage;
@@ -79,11 +91,9 @@ public class PlayerController : MonoBehaviour {
             healthBar.offsetMax = new Vector2(currentHealthBar, healthBar.offsetMax.y);
         }
     }
-
-    private void Die()
+    
+    public bool isAlive()
     {
-        healthBar.gameObject.SetActive(false);
-        gameOverText.enabled = true;
-        alive = false;
+        return alive;
     }
 }

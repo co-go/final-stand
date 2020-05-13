@@ -15,8 +15,15 @@ public class MouseLook : MonoBehaviour {
     public float maximumY = 60F;
     float rotationY = 0F;
 
+    private PlayerController playerController;
+
+    void Start()
+    {
+        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+    }
+
     void Update() {
-        if (!paused) {
+        if (!paused && playerController.isAlive()) {
             if (axes == RotationAxes.MouseXAndY) {
                 float rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivityX;
 

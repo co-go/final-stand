@@ -44,10 +44,7 @@ public class EnemyController : MonoBehaviour {
             transform.LookAt(playerLocation);
 
             blend = (moveSpeed - 1) / (maxSpeed - 1);
-            if (moveSpeed > 1.0f) blend += 0.3f;
-            if (blend > 1) blend = 1.0f;
-
-            Debug.Log(blend);
+            if (moveSpeed > 1.0f) blend = Mathf.Min(blend + 0.3f, 1.0f);
 
             animator.SetFloat("Blend", blend);
 
