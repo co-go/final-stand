@@ -12,14 +12,21 @@ public class PlayerController : MonoBehaviour {
     public float gravity = 20.0f;
     public float sprintMultiplier = 2.0f;
 
-    public Text healthText;
     public Text gameOverText;
     public Text scoreText;
+
+    public Text healthText;
     public RectTransform healthBar;
     private float fullHealth;
+    private float oneHealthPoint;
     private float healthBarIncrement;
     private float currentHealthBar;
     private bool alive;
+
+    public float regenDelay = 5.0f;
+    public float healthRegenSpeed;
+    private float timeLastHit;
+    private float regenCounter;
 
     private Vector3 moveDirection = Vector3.zero;
 
@@ -30,8 +37,11 @@ public class PlayerController : MonoBehaviour {
         inventoryController = GetComponent<InventoryController>();
         healthText.text = health + " / 100";
         fullHealth = healthBar.offsetMax.x;
-        healthBarIncrement = (fullHealth - healthBar.offsetMin.x) / 5;
+        oneHealthPoint = (fullHealth - healthBar.offsetMin.x) / 100;
+        healthBarIncrement = oneHealthPoint * 20;
         currentHealthBar = fullHealth;
+        timeLastHit = 0f;
+        regenCounter = 0;
         alive = true;
     }
 
@@ -66,6 +76,23 @@ public class PlayerController : MonoBehaviour {
 
         moveDirection.y -= gravity * Time.deltaTime;
         if (alive) characterController.Move(moveDirection * Time.deltaTime);
+
+        if (Time.time > timeLastHit + regenDelay && health < 100)
+        {
+            if (regenCounter >= 20 - healthRegenSpeed)
+            {
+                health += 1;
+                healthText.text = health + " / 100";
+                currentHealthBar += oneHealthPoint;
+                healthBar.offsetMax = new Vector2(currentHealthBar, healthBar.offsetMax.y);
+                regenCounter = 0;
+            }
+            else
+            {
+                regenCounter++;
+            }
+            
+        }
     }
 
     private void Die()
@@ -78,6 +105,7 @@ public class PlayerController : MonoBehaviour {
 
     public void TakeDamage(int damage)
     {
+        timeLastHit = Time.time;
         health -= damage;
         if (health < 0) health = 0;
         healthText.text = health + " / 100";

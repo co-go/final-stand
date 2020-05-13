@@ -6877,10 +6877,12 @@ MonoBehaviour:
   jumpSpeed: 8
   gravity: 20
   sprintMultiplier: 2
-  healthText: {fileID: 1289516855}
   gameOverText: {fileID: 2085352488}
   scoreText: {fileID: 622070660}
+  healthText: {fileID: 1289516855}
   healthBar: {fileID: 119941194}
+  regenDelay: 5
+  healthRegenSpeed: 10
 --- !u!136 &880794615
 CapsuleCollider:
   m_ObjectHideFlags: 0
