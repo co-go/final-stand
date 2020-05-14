@@ -10,8 +10,8 @@ public class GameController : MonoBehaviour {
     public GameObject weaponUI;
     public Camera mainCamera;
     public float scale;
-
-    bool paused = false;
+    public bool paused = false;
+    
     int screenWidth = Screen.width;
     int screenHeight = Screen.height;
 
