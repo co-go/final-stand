@@ -21956,7 +21956,7 @@ MonoBehaviour:
     type: 3}
   dirtImpact: {fileID: 100002, guid: 2f9348d6583cde14eb0d82bb9732647e, type: 3}
   equipSlot: -1
-  fireAudioClip: {fileID: 8300000, guid: 8581f806dddef8046b4942de05b897be, type: 3}
+  fireAudioClip: {fileID: 8300000, guid: fecc3e7a0166a104cb810435f6fdf37b, type: 3}
   reloadAudioClip: {fileID: 8300000, guid: e1d79f4a0c7873742babc5f6e9ff800e, type: 3}
 --- !u!95 &1188695013
 Animator:
