@@ -13,7 +13,9 @@ public class GameController : MonoBehaviour {
     public float scale;
     public bool paused = false;
 
-    public Text RoundText;
+    public Text score;
+    public Text kills;
+    public Text roundText;
     public int round;
     public int timeBetweenRounds;
     public int activeZombieCap;
@@ -25,6 +27,7 @@ public class GameController : MonoBehaviour {
     private float nextSpawnTime;
 
     private GameObject[] spawnPoints;
+    private InventoryController inventoryController;
 
     int screenWidth = Screen.width;
     int screenHeight = Screen.height;
@@ -36,6 +39,7 @@ public class GameController : MonoBehaviour {
         crosshair.SetActive(true);
         UpdateUIScale();
         spawnPoints = GameObject.FindGameObjectsWithTag("Spawner");
+        inventoryController = player.GetComponent<InventoryController>();
         zombiesRemaining = 5 * (round + 1);
         if (spawningEnabled) StartNewRound();
     }
@@ -71,6 +75,9 @@ public class GameController : MonoBehaviour {
             Time.timeScale = 0.0f;
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
+            score.text = "Score: " + inventoryController.GetScore();
+            kills.text = "Kills: " + inventoryController.GetKills();
+            
         } else {
             Time.timeScale = 1.0f;
             Cursor.visible = false;
@@ -112,7 +119,7 @@ public class GameController : MonoBehaviour {
     private void StartNewRound()
     {
         round++;
-        RoundText.text = "Round " + round;
+        roundText.text = "Round " + round;
         spawningEnabled = true;
     }
 

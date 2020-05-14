@@ -74,11 +74,15 @@ public class EnemyController : MonoBehaviour {
         health -= damage;
         if (health <= 0f) {
             animator.SetTrigger("Killed");
-            if (alive) inventoryController.AddPoints(pointsOnDeath);
+            if (alive)
+            {
+                inventoryController.AddPoints(pointsOnDeath);
+                inventoryController.AddKill();
+                gameController.LowerZombieCount();
+            }
             alive = false;
             characterController.enabled = false;
-            gameController.LowerZombieCount();
-
+            
             if (Random.Range(0, 100) < 25)
             {
                 Vector3 newPosition = transform.position + new Vector3(0f, 1f, 0f);
