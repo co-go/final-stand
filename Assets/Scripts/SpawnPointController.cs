@@ -9,7 +9,7 @@ public class SpawnPointController : MonoBehaviour
     public bool active;
 
     private Vector3 location;
-    private float nextSpawnTime;
+    //private float nextSpawnTime;
 
     private EnemyController enemy;
 
@@ -17,20 +17,16 @@ public class SpawnPointController : MonoBehaviour
     void Start()
     {
         location = transform.position;
-        nextSpawnTime = 0;
+        //nextSpawnTime = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (active && Time.time > nextSpawnTime)
-        {
-            nextSpawnTime = Time.time + 5.0f;
-            SpawnZombie(1);
-        }
+
     }
 
-    public void SpawnZombie(int waveNumber)
+    public void SpawnZombie(int roundNumber)
     {
         if (Random.value < 0.5f)
         {
@@ -41,16 +37,16 @@ public class SpawnPointController : MonoBehaviour
             enemy = Instantiate(femaleZombie, location, Quaternion.identity).GetComponent<EnemyController>();
         }
 
-        /* enemy speed & health varies based on wave progression */
-        if (waveNumber < 3)
+        /* enemy speed & health varies based on round progression */
+        if (roundNumber < 3)
         {
             enemy.moveSpeed = 1;
         }
-        else if (waveNumber < 6)
+        else if (roundNumber < 6)
         {
             enemy.moveSpeed = Random.value * (enemy.maxSpeed/2);
         }
-        else if (waveNumber < 12)
+        else if (roundNumber < 12)
         {
             enemy.moveSpeed = Random.value * enemy.maxSpeed;
         }
@@ -59,6 +55,6 @@ public class SpawnPointController : MonoBehaviour
             enemy.moveSpeed = (enemy.maxSpeed/2) + Random.value * (enemy.maxSpeed/2);
         }
         
-        enemy.health = enemy.health * waveNumber;
+        enemy.health = enemy.health * roundNumber;
     }
 }

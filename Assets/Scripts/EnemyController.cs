@@ -21,6 +21,7 @@ public class EnemyController : MonoBehaviour {
 
     private GameObject player;
     private InventoryController inventoryController;
+    private GameController gameController;
 
     private bool alive = true;
     private float blend;
@@ -33,6 +34,7 @@ public class EnemyController : MonoBehaviour {
         player = GameObject.Find("Player");
         inventoryController = player.GetComponent<InventoryController>();
         characterController = GetComponent<CharacterController>();
+        gameController = GameObject.Find("GameController").GetComponent<GameController>();
         animator = GetComponent<Animator>();
         if (on) animator.SetBool("PlayerActive", true);
     }
@@ -75,16 +77,19 @@ public class EnemyController : MonoBehaviour {
             if (alive) inventoryController.AddPoints(pointsOnDeath);
             alive = false;
             characterController.enabled = false;
+            gameController.LowerZombieCount();
+
+            if (Random.Range(0, 100) < 25)
+            {
+                Vector3 newPosition = transform.position + new Vector3(0f, 1f, 0f);
+                Instantiate(powerUps[Random.Range(0, powerUps.Length)], newPosition, Quaternion.identity);
+            }
+
             Invoke("Die", 5.0f);
         }
     }
 
     void Die() {
-        if (Random.Range(0, 100) < 25) {
-            Vector3 newPosition = transform.position + new Vector3(0f, 1f, 0f);
-            Instantiate(powerUps[Random.Range(0, powerUps.Length)], newPosition, Quaternion.identity);
-        }
-
         Destroy(gameObject);
     }
 

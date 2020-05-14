@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - Dirt
   - Pickup
+  - Spawner
   layers:
   - Default
   - TransparentFX
