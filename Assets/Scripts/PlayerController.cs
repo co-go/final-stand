@@ -124,4 +124,21 @@ public class PlayerController : MonoBehaviour {
     {
         return alive;
     }
+
+    public void SuperSpeed() {
+        speed *= 2;
+        Invoke("ResetSpeed", 10);
+    }
+
+    public void ResetSpeed() {
+        speed /= 2;
+    }
+
+    public void MaxAmmo() {
+        inventoryController.weapons[inventoryController.currentWeapons[0]].GetComponent<WeaponController>().RefillAmmo();
+
+        if (inventoryController.currentWeapons[1] != -1) {
+            inventoryController.weapons[inventoryController.currentWeapons[1]].GetComponent<WeaponController>().RefillAmmo();
+        }
+    }
 }
