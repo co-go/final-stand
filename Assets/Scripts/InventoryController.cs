@@ -80,13 +80,17 @@ public class InventoryController : MonoBehaviour {
         if (currentWeapons[1] == -1) {
             currentWeapons[1] = weaponIndex;
             StartCoroutine(SwapWeapons(2));
+            weapons[weaponIndex].GetComponent<WeaponController>().equipSlot = 1;
         }
         else
         {
             HolsterWeapon();
+            weapons[currentWeapons[equippedWeapon]].GetComponent<WeaponController>().equipSlot = -1;
             currentWeapons[equippedWeapon] = weaponIndex;
             DrawWeapon();
+            weapons[weaponIndex].GetComponent<WeaponController>().equipSlot = equippedWeapon;
         }
+
         points -= weaponCost;
         UpdatePointsText();
     }

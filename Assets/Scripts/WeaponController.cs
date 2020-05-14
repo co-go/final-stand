@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class WeaponController : MonoBehaviour {
     public Image ReloadBar;
-
+    
     public float range = 100f;
     public float damage;
     public float fireRate;
@@ -43,19 +43,19 @@ public class WeaponController : MonoBehaviour {
         animator = GetComponent<Animator>();
         inventory = transform.parent.transform.parent.transform.parent.GetComponent<InventoryController>();
 
-        if (equipSlot != -1) SendWeaponState();
-
         ReloadBar.fillAmount = 0;
 
         fireAudioSource = AddAudio(false, false, 1.0f, 1.0f, fireAudioClip);
         reloadAudioSource = AddAudio(false, false, 1.0f, 0.5f, reloadAudioClip);
 
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+        SendWeaponState();
     }
 
     void OnEnable() {
         // fix occasional artifact from canceling reload
         ReloadBar.fillAmount = 0;
+        SendWeaponState();
     }
 
     void OnDisable() {
@@ -66,7 +66,7 @@ public class WeaponController : MonoBehaviour {
     }
 
     void SendWeaponState() {
-        inventory.UpdateWeaponInfo(equipSlot == 0, transform.name, currAmmo, reserveAmmo);
+        if (inventory != null) inventory.UpdateWeaponInfo(equipSlot == 0, transform.name, currAmmo, reserveAmmo);
     }
 
     void Update() {

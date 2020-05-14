@@ -21347,7 +21347,7 @@ MonoBehaviour:
   weaponHolder: {fileID: 124058066}
   swapTime: 0.25
   pointsText: {fileID: 1685347259}
-  points: 500
+  points: 1000
   weapons:
   - {fileID: 1055940911}
   - {fileID: 1353805831}
@@ -21598,6 +21598,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ReloadBar: {fileID: 1478948811}
+  weaponName: Pistol
   range: 100
   damage: 10
   fireRate: 8
@@ -21938,9 +21939,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ReloadBar: {fileID: 1478948811}
+  weaponName: Sniper
   range: 100
   damage: 50
-  fireRate: 1
+  fireRate: 1.5
   impactForce: 100
   fullAuto: 0
   reserveAmmo: 46
@@ -27318,6 +27320,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ReloadBar: {fileID: 1478948811}
+  weaponName: P90
   range: 100
   damage: 8
   fireRate: 8
