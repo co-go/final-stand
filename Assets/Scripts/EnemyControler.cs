@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour {
-    CharacterController characterController;
-    Animator animator;
-
+public class EnemyControler : MonoBehaviour {
     public float health = 100f;
     public float minDist = 2.0f;
     public float moveSpeed = 1.0f;
@@ -26,6 +23,9 @@ public class EnemyController : MonoBehaviour {
     private float blend;
 
     public GameObject[] powerUps;
+
+    CharacterController characterController;
+    Animator animator;
 
     // Start is called before the first frame update
     void Start()
@@ -84,11 +84,6 @@ public class EnemyController : MonoBehaviour {
     }
 
     void Die() {
-        if (Random.Range(0, 100) < 25) {
-            Vector3 newPosition = transform.position + new Vector3(0f, 1f, 0f);
-            Instantiate(powerUps[Random.Range(0, powerUps.Length)], newPosition, Quaternion.identity);
-        }
-
         Destroy(gameObject);
     }
 }

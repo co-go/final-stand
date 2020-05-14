@@ -893,6 +893,9 @@ MonoBehaviour:
   pointsOnDeath: 50
   hasHit: 0
   on: 1
+  powerUps:
+  - {fileID: 876918958369365277, guid: 37b3b15ba327542e484e2d0b76c4ef51, type: 3}
+  - {fileID: 302015451997495344, guid: ad8099bc9c95c49fe876f4bc1882188a, type: 3}
 --- !u!1 &7375830441840226237
 GameObject:
   m_ObjectHideFlags: 0

@@ -879,6 +879,7 @@ MonoBehaviour:
   pointsOnDeath: 0
   hasHit: 0
   on: 0
+  powerUps: []
 --- !u!1 &224414605
 GameObject:
   m_ObjectHideFlags: 0
@@ -21818,6 +21819,7 @@ MonoBehaviour:
   pointsOnDeath: 0
   hasHit: 0
   on: 0
+  powerUps: []
 --- !u!143 &1124906333
 CharacterController:
   m_ObjectHideFlags: 0
@@ -33249,6 +33251,10 @@ MonoBehaviour:
   pointsOnDeath: 50
   hasHit: 0
   on: 1
+  powerUps:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &1778755357
 GameObject:
   m_ObjectHideFlags: 0
