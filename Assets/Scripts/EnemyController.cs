@@ -40,7 +40,7 @@ public class EnemyController : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (on && alive)
+        if (on && alive && Time.time >= nextTimeToAttack)
         {
             playerLocation = new Vector3(player.transform.position.x, 0.0f, player.transform.position.z);
             transform.LookAt(playerLocation);
@@ -58,11 +58,7 @@ public class EnemyController : MonoBehaviour {
             }
             else
             {
-                if (Time.time >= nextTimeToAttack)
-                {
-                    animator.SetTrigger("Attack");
-                    nextTimeToAttack = Time.time + 2.0f;
-                }
+                Attack();
             }
 
             if (hasHit && Time.time >= nextTimeToAttack)
@@ -90,5 +86,11 @@ public class EnemyController : MonoBehaviour {
         }
 
         Destroy(gameObject);
+    }
+
+    private void Attack()
+    {
+        animator.SetTrigger("Attack");
+        nextTimeToAttack = Time.time + 2.0f;
     }
 }
