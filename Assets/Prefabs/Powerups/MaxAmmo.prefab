@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 302714196397859130}
   - component: {fileID: 302714196397859133}
   - component: {fileID: 302714196397859132}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MaxAmmo
   m_TagString: Untagged
   m_Icon: {fileID: 0}

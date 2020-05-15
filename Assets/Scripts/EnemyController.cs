@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour {
     CharacterController characterController;
@@ -22,6 +23,7 @@ public class EnemyController : MonoBehaviour {
     private GameObject player;
     private InventoryController inventoryController;
     private GameController gameController;
+    private NavMeshAgent agent;
 
     private bool alive = true;
     private float blend;
@@ -36,6 +38,8 @@ public class EnemyController : MonoBehaviour {
         characterController = GetComponent<CharacterController>();
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
         animator = GetComponent<Animator>();
+        agent = GetComponent<NavMeshAgent>();
+        agent.speed = moveSpeed;
         if (on) animator.SetBool("PlayerActive", true);
     }
 
@@ -45,7 +49,7 @@ public class EnemyController : MonoBehaviour {
         if (on && alive && Time.time >= nextTimeToAttack)
         {
             playerLocation = new Vector3(player.transform.position.x, 0.0f, player.transform.position.z);
-            transform.LookAt(playerLocation);
+            transform.LookAt(transform.position);
 
             blend = (moveSpeed - 1) / (maxSpeed - 1);
             if (moveSpeed > 1.0f) blend = Mathf.Min(blend + 0.3f, 1.0f);
@@ -54,9 +58,7 @@ public class EnemyController : MonoBehaviour {
 
             if (Vector3.Distance(transform.position, player.transform.position) >= minDist)
             {
-                moveDirection = transform.forward * moveSpeed;
-                moveDirection.y -= gravity;
-                characterController.Move(moveDirection * Time.deltaTime);
+                agent.SetDestination(player.transform.position);
             }
             else
             {
@@ -82,6 +84,7 @@ public class EnemyController : MonoBehaviour {
             }
             alive = false;
             characterController.enabled = false;
+            agent.isStopped = true;
             
             if (Random.Range(0, 100) < 25)
             {

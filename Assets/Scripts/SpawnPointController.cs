@@ -9,7 +9,6 @@ public class SpawnPointController : MonoBehaviour
     public bool active;
 
     private Vector3 location;
-    //private float nextSpawnTime;
 
     private EnemyController enemy;
 
@@ -17,7 +16,6 @@ public class SpawnPointController : MonoBehaviour
     void Start()
     {
         location = transform.position;
-        //nextSpawnTime = 0;
     }
 
     // Update is called once per frame
