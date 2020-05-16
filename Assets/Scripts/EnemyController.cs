@@ -15,6 +15,7 @@ public class EnemyController : MonoBehaviour {
     public float nextTimeToAttack = 0f;
     public int pointsOnDeath;
     public bool hasHit = false;
+    public bool canHit = false;
     public bool on;
 
     private Vector3 playerLocation;
@@ -48,6 +49,10 @@ public class EnemyController : MonoBehaviour {
     {
         if (on && alive && Time.time >= nextTimeToAttack)
         {
+            if (agent.isStopped) agent.isStopped = false;
+            if (hasHit) hasHit = false;
+            if (canHit) canHit = false;
+
             playerLocation = new Vector3(player.transform.position.x, 0.0f, player.transform.position.z);
             transform.LookAt(transform.position);
 
@@ -63,11 +68,7 @@ public class EnemyController : MonoBehaviour {
             else
             {
                 Attack();
-            }
-
-            if (hasHit && Time.time >= nextTimeToAttack)
-            {
-                hasHit = false;
+                Invoke("EnableCanHit", 1);
             }
         }
     }
@@ -104,5 +105,11 @@ public class EnemyController : MonoBehaviour {
     {
         animator.SetTrigger("Attack");
         nextTimeToAttack = Time.time + 2.0f;
+        agent.isStopped = true;
+    }
+
+    private void EnableCanHit()
+    {
+        canHit = true;
     }
 }

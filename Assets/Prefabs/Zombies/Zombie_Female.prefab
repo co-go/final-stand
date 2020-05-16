@@ -885,8 +885,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 409d053dd778f4db6adcb969bc103895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 20
-  minDist: 2
+  health: 100
+  minDist: 2.1
   moveSpeed: 2
   maxSpeed: 6
   gravity: 20

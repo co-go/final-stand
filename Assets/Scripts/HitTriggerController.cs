@@ -25,7 +25,7 @@ public class HitTriggerController : MonoBehaviour
         if (other.tag == "Player")
         {
             EnemyController enemy = transform.root.GetComponent<EnemyController>();
-            if (enemy.nextTimeToAttack > Time.time && !enemy.hasHit)
+            if (enemy.nextTimeToAttack > Time.time && enemy.canHit && !enemy.hasHit )
             {
                 enemy.hasHit = true;
                 other.GetComponent<PlayerController>().TakeDamage(damage);

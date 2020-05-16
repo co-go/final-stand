@@ -21130,7 +21130,7 @@ MonoBehaviour:
   healthText: {fileID: 1289516855}
   healthBar: {fileID: 119941194}
   regenDelay: 5
-  healthRegenSpeed: 10
+  healthRegenSpeed: 15
 --- !u!136 &880794615
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -21609,7 +21609,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ReloadBar: {fileID: 1478948811}
   range: 100
-  damage: 10
+  damage: 30
   fireRate: 8
   impactForce: 10
   fullAuto: 0
@@ -21934,7 +21934,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ReloadBar: {fileID: 1478948811}
   range: 100
-  damage: 50
+  damage: 300
   fireRate: 1.5
   impactForce: 100
   fullAuto: 0
@@ -27449,7 +27449,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ReloadBar: {fileID: 1478948811}
   range: 100
-  damage: 8
+  damage: 25
   fireRate: 8
   impactForce: 5
   fullAuto: 1
@@ -33343,7 +33343,7 @@ MonoBehaviour:
   score: {fileID: 1456575268}
   kills: {fileID: 1267648892}
   roundText: {fileID: 1333883284}
-  round: 12
+  round: 0
   timeBetweenRounds: 5
   activeZombieCap: 5
   zombiesInGame: 0

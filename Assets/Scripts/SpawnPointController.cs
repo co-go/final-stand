@@ -52,7 +52,14 @@ public class SpawnPointController : MonoBehaviour
         {
             enemy.moveSpeed = (enemy.maxSpeed/2) + Random.value * (enemy.maxSpeed/2);
         }
-        
-        enemy.health = enemy.health * roundNumber;
+
+        if (roundNumber < 10)
+        {
+            enemy.health = enemy.health + (50 * roundNumber);
+        }
+        else
+        {
+            enemy.health = (enemy.health + (50 * 9)) * Mathf.Pow(1.1f, roundNumber - 9);
+        }
     }
 }
