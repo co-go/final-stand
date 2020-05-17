@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using UnityEngine.AI;
 
 public class GameController : MonoBehaviour {
     public GameObject pauseMenu;
@@ -22,6 +24,7 @@ public class GameController : MonoBehaviour {
     public int zombiesInGame;
     public float spawnDelay;
     public bool spawningEnabled;
+    private bool playerSpawned = false;
 
     private int zombiesRemaining;
     private float nextSpawnTime;
@@ -33,6 +36,8 @@ public class GameController : MonoBehaviour {
     int screenHeight = Screen.height;
 
     void Start() {
+        SceneManager.LoadScene("Office", LoadSceneMode.Additive);
+        
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         pauseMenu.SetActive(false);
@@ -47,6 +52,13 @@ public class GameController : MonoBehaviour {
     void Update() {
         if (Input.GetKeyDown("escape")) {
             TogglePause();
+        }
+
+        if (!playerSpawned && GameObject.Find("PlayerSpawn") != null)
+        {
+            player.transform.position = GameObject.Find("PlayerSpawn").transform.position;
+            //GameObject.Find("NavMesh").GetComponent<NavMeshSurface>().BuildNavMesh();
+            playerSpawned = true;
         }
 
         if (Screen.height != screenHeight || Screen.width != screenWidth)
