@@ -20947,7 +20947,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Press escape again to return to the game
+  m_Text: Press 'P' again to return to the game
 --- !u!222 &747129367
 CanvasRenderer:
   m_ObjectHideFlags: 0

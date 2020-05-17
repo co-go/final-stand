@@ -50,7 +50,7 @@ public class GameController : MonoBehaviour {
     }
 
     void Update() {
-        if (Input.GetKeyDown("escape")) {
+        if (Input.GetKeyDown("p")) {
             TogglePause();
         }
 
