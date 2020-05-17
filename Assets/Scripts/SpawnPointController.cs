@@ -40,17 +40,17 @@ public class SpawnPointController : MonoBehaviour
         {
             enemy.moveSpeed = 1;
         }
-        else if (roundNumber < 6)
+        else if (roundNumber < 5)
         {
             enemy.moveSpeed = Random.value * (enemy.maxSpeed/2);
         }
-        else if (roundNumber < 12)
+        else if (roundNumber < 7)
         {
             enemy.moveSpeed = Random.value * enemy.maxSpeed;
         }
         else
         {
-            enemy.moveSpeed = (enemy.maxSpeed/2) + Random.value * (enemy.maxSpeed/2);
+            enemy.moveSpeed = enemy.maxSpeed - Random.value * 2;
         }
 
         if (roundNumber < 10)
